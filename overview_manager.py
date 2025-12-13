@@ -78,9 +78,12 @@ if __name__ == "__main__":
     }
     root = tk.Tk()
     frame = tk.Frame(root)
-    frame.pack()
+    frame.pack(expand=True, fill="both")
     try:
         board = OverviewManager(frame, SYMBOLS)
+        board.load_panel("btcusdt")
+        board.load_panel("ethusdt")
+        board.load_panel("solusdt")
         root.mainloop()
     except Exception as e:
         print(f"\n{'#'*10}ERROR{'#'*10}")

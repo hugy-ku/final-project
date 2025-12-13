@@ -26,11 +26,11 @@ class OrderBook:
         self.buy_label.pack(side="left", expand=True, fill="both", padx=5)
         self.sell_label.pack(side="right", expand=True, fill="both", padx=5)
 
-        self.buy_frame = tk.Frame(self.master, background="#999999")
+        self.buy_frame = tk.Frame(self.master)
         self.buy_frame.pack(side="left", expand=True, fill="both", padx=5)
         self.buy_panel = OrderBookPanel(self.buy_frame, depth)
 
-        self.sell_frame = tk.Frame(self.master, background="#999999")
+        self.sell_frame = tk.Frame(self.master)
         self.sell_frame.pack(side="right", expand=True, fill="both", padx=5, pady=2)
         self.sell_panel = OrderBookPanel(self.sell_frame, depth)
 
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     try:
         root = tk.Tk()
         frame = tk.Frame(root)
-        book = OrderBook(frame, "btcusdt")
+        book = OrderBook(frame, "btcusdt", "BTC/USDT")
         root.mainloop()
     except Exception as e:
         print(e)

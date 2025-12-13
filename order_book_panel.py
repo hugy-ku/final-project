@@ -3,6 +3,7 @@ import tkinter as tk
 class OrderBookPanel:
     def __init__(self, master: tk.Frame, depth: int):
         self.master = master
+        self.master.configure(background="#999999")
         self.master.pack(expand=True, fill="both")
         self.master.columnconfigure(0, weight=1)
         self.master.columnconfigure(1, weight=1)
@@ -33,7 +34,19 @@ class OrderBookPanel:
 
 
 if __name__ == "__main__":
+    # I recommend collapsing this
+    DUMMY_ORDERS = [
+    [
+        "1",
+        "2"
+    ],
+    [
+        "3",
+        "4"
+    ],
+    ]
     root = tk.Tk()
     frame = tk.Frame(root)
-    panel = OrderBookPanel(frame)
+    panel = OrderBookPanel(frame, 10)
+    panel.update_orders(DUMMY_ORDERS)
     root.mainloop()

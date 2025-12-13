@@ -87,10 +87,10 @@ class OverviewPanel:
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("800x600")
-    frame = tk.Frame(root)
-    frame.pack(expand=True, fill="both")
     try:
-        manager = OverviewPanel(frame, "btcusdt")
+        manager = OverviewPanel(root, "BTC/USDT", "btcusdt")
+        # it looks stupid but its only been 3 days since I started and I'm not refactoring everything already
+        manager.frame.pack(expand=True, fill="both")
         root.mainloop()
     except Exception as e:
         print(f"\n{'#'*10}ERROR{'#'*10}")
