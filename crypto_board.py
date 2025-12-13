@@ -66,7 +66,7 @@ class CryptoBoard:
                     self.save_preferences()
                     return
             self.order_book_frame = tk.Frame(self.master)
-            self.order_book = OrderBook(self.order_book_frame, button_id, self.symbols[button_id])
+            self.order_book = OrderBook(self.order_book_frame, button_id, self.symbols[button_id]["name"])
             self.save_preferences()
             return
     

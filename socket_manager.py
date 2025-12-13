@@ -4,9 +4,11 @@ import time
 
 
 class SocketManager():
-    def __init__(self, url: str, on_message):
+    def __init__(self, url: str, on_message, on_close=None, on_open=None):
         self.url = url
         self.on_message = on_message
+        if on_close: self.on_close = on_close
+        if on_open: self.on_open = on_open
         self.ws = None
         self.start()
 
@@ -14,6 +16,12 @@ class SocketManager():
     def on_error(self, ws, error):
         print(f"{self.url} error: {error}")
         ws = None
+    
+    def on_close(self, ws, s, m):
+        print(f"{self.url} has closed")
+
+    def on_open(self, ws):
+        print(f"{self.url} has connected")
 
     def start(self):
         if self.ws:
@@ -23,9 +31,9 @@ class SocketManager():
             self.url,
             on_message=self.on_message,
             on_error=self.on_error,
-            on_close=lambda ws, s, m: print(f"{self.url} has closed"),
-            on_open=lambda ws: print(f"{self.url} has connected"))
-
+            on_close=self.on_close,
+            on_open=self.on_open
+        )
         threading.Thread(target=self.ws.run_forever, daemon=True).start()
 
     def stop(self):

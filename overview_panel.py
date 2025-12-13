@@ -2,6 +2,8 @@ from socket_manager import SocketManager
 from tkinter import Tk, ttk
 import tkinter as tk
 import json
+from time import sleep
+import threading
 
 class OverviewPanel:
     def __init__(self, master: tk.Frame, symbol_name: str, symbol_id: str):
@@ -10,9 +12,14 @@ class OverviewPanel:
         self.master = master
         self.frame = tk.Frame(self.master)
         self.frame.configure(background="#AAAAAA")
-        self.socket_manager = SocketManager(f"wss://stream.binance.com:9443/ws/{symbol_id}@ticker", self.on_message)
+        self.socket_manager = SocketManager(f"wss://stream.binance.com:9443/ws/{symbol_id}@ticker", self.on_message, self.on_close, self.on_open)
 
-        self.socket_manager
+        self.status_frame = tk.Frame(self.frame, background="#AAAAAA")
+        self.status_frame.pack(expand=True, fill="x")
+        self.reconnect_button = tk.Button(self.status_frame, command=threading.Thread(target=self.reconnect).start, text="reconnect",background="#AAAAAA")
+        self.status = tk.Label(self.status_frame, text="Disconnected", background="#AAAAAA", foreground="#DD0000")
+        self.reconnect_button.pack(side="left", padx=5)
+        self.status.pack(side="right", padx=5)
 
         self.title = ttk.Label(self.frame, text=self.symbol_name, background="#AAAAAA", font=("TkDefaultFont", 20))
         self.title.pack(expand=True)
@@ -23,9 +30,29 @@ class OverviewPanel:
         self.change = ttk.Label(self.frame, text="--- (---%)", background="#AAAAAA", font=("TkDefaultFont", 10))
         self.change.pack(expand=True)
     
+    def reconnect(self):
+        if self.socket_manager.ws:
+            self.socket_manager.stop()
+        sleep(1) # placebo :P
+        self.socket_manager.start()
+
+    def set_status(self, connected: bool):
+        if connected:
+            self.status.configure(text="connected", foreground="#00B500")
+        elif not connected:
+            self.status.configure(text="disconnected", foreground="#DD0000")
+
     def on_message(self, ws, message):
         message = json.loads(message)
         self.frame.after(0, lambda: self.update_text(message))
+    
+    def on_close(self, ws, s, m):
+        print(f"{self.socket_manager.url} has closed")
+        self.frame.after(0, self.set_status(False))
+    
+    def on_open(self, ws):
+        print(f"{self.socket_manager.url} has connected")
+        self.frame.after(0, self.set_status(True))
 
     def update_text(self, message):
         current_price = message["c"].rstrip("0")
@@ -48,7 +75,6 @@ class OverviewPanel:
 
         self.current_price.configure(text=f"{current_price:.2f}", foreground=colour)
         self.change.configure(text=f"{change:.2f} ({percent:.2f}%)", foreground=colour)
-
 
     def stop(self):
         self.socket_manager.stop()
