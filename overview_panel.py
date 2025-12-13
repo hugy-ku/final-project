@@ -9,18 +9,18 @@ class OverviewPanel:
         self.symbol_id = symbol_id
         self.master = master
         self.frame = tk.Frame(self.master)
-        self.frame.configure(background="#999999")
+        self.frame.configure(background="#AAAAAA")
         self.socket_manager = SocketManager(f"wss://stream.binance.com:9443/ws/{symbol_id}@ticker", self.on_message)
 
         self.socket_manager
 
-        self.title = ttk.Label(self.frame, text=self.symbol_name, background="#999999", font=("TkDefaultFont", 20))
+        self.title = ttk.Label(self.frame, text=self.symbol_name, background="#AAAAAA", font=("TkDefaultFont", 20))
         self.title.pack(expand=True)
 
-        self.current_price = ttk.Label(self.frame, text="---", background="#999999",font=("TkDefaultFont", 25))
+        self.current_price = ttk.Label(self.frame, text="---", background="#AAAAAA",font=("TkDefaultFont", 25))
         self.current_price.pack(expand=True)
 
-        self.change = ttk.Label(self.frame, text="--- (---%)", background="#999999", font=("TkDefaultFont", 10))
+        self.change = ttk.Label(self.frame, text="--- (---%)", background="#AAAAAA", font=("TkDefaultFont", 10))
         self.change.pack(expand=True)
     
     def on_message(self, ws, message):
@@ -40,9 +40,9 @@ class OverviewPanel:
             print("Error: change is not a float")
             return
         if change > 0:
-            colour = "#00CC00"
+            colour = "#00B500"
         elif change < 0:
-            colour = "#CC0000"
+            colour = "#DD0000"
         else:
             colour = "#000000"
 

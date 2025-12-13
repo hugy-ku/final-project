@@ -11,7 +11,7 @@ from order_book_manager import OrderBook
 class CryptoBoard:
     def __init__(self, master: Tk, symbols):
         self.master = master
-        self.master.geometry("800x600")
+        self.master.geometry("1100x600")
         self.symbols = symbols
 
         self.mode = None
@@ -60,13 +60,13 @@ class CryptoBoard:
         if self.mode == "order_book":
             if self.order_book:
                 self.order_book.stop()
-                if button_id == self.order_book.symbol:
+                if button_id == self.order_book.symbol_id:
                     self.order_book.stop()
                     self.order_book = None
                     self.save_preferences()
                     return
             self.order_book_frame = tk.Frame(self.master)
-            self.order_book = OrderBook(self.order_book_frame, button_id)
+            self.order_book = OrderBook(self.order_book_frame, button_id, self.symbols[button_id])
             self.save_preferences()
             return
     
@@ -78,7 +78,7 @@ class CryptoBoard:
         if not self.order_book:
             new_text.append("")
         else:
-            new_text.append(self.order_book.symbol)
+            new_text.append(self.order_book.symbol_id)
 
         with open("preferences.txt", "w") as file:
             file.write('\n'.join(new_text))
@@ -99,7 +99,7 @@ class CryptoBoard:
 
         self.overview_manager.load_panels(text[1].split(","))
         if text[2] != "":
-            self.order_book = OrderBook(self.order_book_frame, text[2])
+            self.order_book = OrderBook(self.order_book_frame, text[2], self.symbols[text[2]]["name"])
         self.on_button_pressed(text[0]) # insane code lmao, might fix later (read: never)
 
 
