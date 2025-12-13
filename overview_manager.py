@@ -1,9 +1,4 @@
-from tkinter import Tk, ttk
 import tkinter as tk
-import time
-import json
-from socket_manager import SocketManager
-from title_bar import TitleBar
 from overview_panel import OverviewPanel
 
 class OverviewManager:
@@ -14,7 +9,7 @@ class OverviewManager:
 
         self.symbols = symbols
         self.panels = []
-    
+
     def load_panel(self, symbol_id):
         if symbol_id not in self.symbols.keys():
             return
@@ -22,7 +17,7 @@ class OverviewManager:
         panel = OverviewPanel(self.frame, symbol["name"], symbol["id"])
         self.grid(panel, len(self.panels))
         self.panels.append(panel)
-    
+
     def unload_panel(self, panel: OverviewPanel):
         panel.stop()
         self.panels.remove(panel)
@@ -65,7 +60,7 @@ class OverviewManager:
         for panel in self.panels:
             panel.stop()
         self.panels = []
-    
+
     def load_panels(self, symbol_ids):
         for symbol_id in symbol_ids:
             self.load_panel(symbol_id)
@@ -81,7 +76,7 @@ if __name__ == "__main__":
         "solusdc": {"name": "SOL/USDC", "id": "solusdc"},
         "bnbusdc": {"name": "BNB/USDC", "id": "bnbusdc"},
     }
-    root = Tk()
+    root = tk.Tk()
     frame = tk.Frame(root)
     frame.pack()
     try:

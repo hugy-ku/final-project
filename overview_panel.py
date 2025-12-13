@@ -1,5 +1,4 @@
 from socket_manager import SocketManager
-from tkinter import Tk, ttk
 import tkinter as tk
 import json
 from time import sleep
@@ -21,15 +20,15 @@ class OverviewPanel:
         self.reconnect_button.pack(side="left", padx=5)
         self.status.pack(side="right", padx=5)
 
-        self.title = ttk.Label(self.frame, text=self.symbol_name, background="#AAAAAA", font=("TkDefaultFont", 20))
+        self.title = tk.Label(self.frame, text=self.symbol_name, background="#AAAAAA", font=("TkDefaultFont", 20))
         self.title.pack(expand=True)
 
-        self.current_price = ttk.Label(self.frame, text="---", background="#AAAAAA",font=("TkDefaultFont", 25))
+        self.current_price = tk.Label(self.frame, text="---", background="#AAAAAA",font=("TkDefaultFont", 25))
         self.current_price.pack(expand=True)
 
-        self.change = ttk.Label(self.frame, text="--- (---%)", background="#AAAAAA", font=("TkDefaultFont", 10))
+        self.change = tk.Label(self.frame, text="--- (---%)", background="#AAAAAA", font=("TkDefaultFont", 10))
         self.change.pack(expand=True)
-    
+
     def reconnect(self):
         if self.socket_manager.ws:
             self.socket_manager.stop()
@@ -45,11 +44,11 @@ class OverviewPanel:
     def on_message(self, ws, message):
         message = json.loads(message)
         self.frame.after(0, lambda: self.update_text(message))
-    
+
     def on_close(self, ws, s, m):
         print(f"{self.socket_manager.url} has closed")
         self.frame.after(0, self.set_status(False))
-    
+
     def on_open(self, ws):
         print(f"{self.socket_manager.url} has connected")
         self.frame.after(0, self.set_status(True))
@@ -58,7 +57,7 @@ class OverviewPanel:
         current_price = message["c"].rstrip("0")
         change = message["p"].rstrip("0")
         percent = message["P"]
-        
+
         try:
             current_price = float(current_price)
             change = float(change)
@@ -86,11 +85,11 @@ class OverviewPanel:
 
 
 if __name__ == "__main__":
-    root = Tk()
+    root = tk.Tk()
     root.geometry("800x600")
     frame = tk.Frame(root)
     frame.pack(expand=True, fill="both")
-    try:    
+    try:
         manager = OverviewPanel(frame, "btcusdt")
         root.mainloop()
     except Exception as e:
@@ -98,4 +97,4 @@ if __name__ == "__main__":
         print(e)
         print(f"{'#'*25}\n")
     finally:
-        manager.stop()        
+        manager.stop()

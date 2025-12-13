@@ -1,13 +1,12 @@
-from tkinter import Tk, ttk
 import tkinter as tk
 
 class TitleBar:
-    def __init__(self, master: Tk, button_names: dict, button_event):
+    def __init__(self, master: tk.Frame, button_names: dict, button_event):
         self.button_event = button_event
         self.buttons = {}
         self.master = master
         self.master.configure(bg="#555555")
-        
+
         default_button = tk.Button(self.master)
         self.default_background = default_button["bg"]
         self.default_foreground = default_button["fg"]
@@ -29,7 +28,7 @@ class TitleBar:
         button_frame = tk.Frame(self.master, background="#555555")
         button_frame.pack(side="right")
         self.load_buttons(button_frame, button_names)
-    
+
     def load_buttons(self, master, button_names: dict):
         half = len(button_names)//2 + len(button_names)%2
         for i, button_info in enumerate(button_names.values()):
@@ -48,17 +47,17 @@ class TitleBar:
             button.grid(row=row, column=column, padx=2, pady=2)
 
     def change_button_colour(self, button_id, mode="unpressed"):
-        if mode == "unpressed": 
+        if mode == "unpressed":
             background = self.default_background
             foreground=self.default_foreground
-        if mode == "pressed": 
+        if mode == "pressed":
             background = self.default_foreground
             foreground=self.default_background
         self.buttons[button_id].configure(background=background, foreground=foreground, activebackground=background, activeforeground=foreground)
 
 
 if __name__ == "__main__":
-    root = Tk()
+    root = tk.Tk()
     root.geometry("1000x100")
     SYMBOLS = {
         "btcusdt": {"name": "BTC/USDT", "id": "btcusdt"},

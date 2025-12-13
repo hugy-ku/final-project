@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import Tk, ttk
 
 class OrderBookPanel:
     def __init__(self, master: tk.Frame, depth: int):
@@ -22,7 +21,7 @@ class OrderBookPanel:
             order_amount.grid(row=i+1, column=1, sticky="e", padx=5)
             self.orders.append([order_price, order_amount])
 
-    
+
     def update_orders(self, orders: list):
         for i, order in enumerate(orders):
             order[0] = order[0].rstrip("0")
@@ -34,7 +33,7 @@ class OrderBookPanel:
 
 
 if __name__ == "__main__":
-    root = Tk()
+    root = tk.Tk()
     frame = tk.Frame(root)
     panel = OrderBookPanel(frame)
     root.mainloop()

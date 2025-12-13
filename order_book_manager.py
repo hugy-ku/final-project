@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import Tk, ttk
 from socket_manager import SocketManager
 from order_book_panel import OrderBookPanel
 import json
@@ -50,7 +49,7 @@ class OrderBook:
 
 if __name__ == "__main__":
     try:
-        root = Tk()
+        root = tk.Tk()
         frame = tk.Frame(root)
         book = OrderBook(frame, "btcusdt")
         root.mainloop()

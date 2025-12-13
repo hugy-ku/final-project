@@ -16,7 +16,7 @@ class SocketManager():
     def on_error(self, ws, error):
         print(f"{self.url} error: {error}")
         ws = None
-    
+
     def on_close(self, ws, s, m):
         print(f"{self.url} has closed")
 

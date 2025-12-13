@@ -1,15 +1,10 @@
-from tkinter import Tk, ttk
 import tkinter as tk
-import time
-import json
-from socket_manager import SocketManager
 from title_bar import TitleBar
-from overview_panel import OverviewPanel
 from overview_manager import OverviewManager
 from order_book_manager import OrderBook
 
 class CryptoBoard:
-    def __init__(self, master: Tk, symbols):
+    def __init__(self, master: tk.Frame, symbols):
         self.master = master
         self.master.geometry("1100x600")
         self.symbols = symbols
@@ -69,7 +64,7 @@ class CryptoBoard:
             self.order_book = OrderBook(self.order_book_frame, button_id, self.symbols[button_id]["name"])
             self.save_preferences()
             return
-    
+
     def save_preferences(self):
         new_text = []
         new_text.append(self.mode)
@@ -114,7 +109,7 @@ if __name__ == "__main__":
         "solusdc": {"name": "SOL/USDC", "id": "solusdc"},
         "bnbusdc": {"name": "BNB/USDC", "id": "bnbusdc"},
     }
-    root = Tk()
+    root = tk.Tk()
     try:
         board = CryptoBoard(root, SYMBOLS)
     except ValueError as e:
