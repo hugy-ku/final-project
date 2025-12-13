@@ -12,7 +12,7 @@ class TitleBar:
         self.default_foreground = default_button["fg"]
 
         title = tk.Label(self.master, text="Crypto Board", foreground="#FFFFFF", background="#555555", font=("TkDefaultFont", 20))
-        title.pack(side="left")
+        title.pack(side="left", padx=5)
 
         page_select = tk.Frame(self.master, background="#555555")
         page_select.pack(side="left", expand=True, padx=10)

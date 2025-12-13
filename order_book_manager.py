@@ -4,6 +4,7 @@ from order_book_panel import OrderBookPanel
 import json
 
 class OrderBook:
+    # one of the worst inits I ever created
     def __init__(self, master: tk.Frame, symbol_id, symbol_name, depth=10, interval_ms = 1000):
         self.master = master
         self.symbol_id = symbol_id
@@ -21,17 +22,17 @@ class OrderBook:
         self.title = tk.Label(self.title_frame, text=self.symbol_name, foreground="#FFFFFF", background="#333333")
         self.title.pack(fill="x", padx=5, pady=5)
 
-        self.buy_label = tk.Label(self.title_frame, text="bids", foreground="#00CC00", background="#333333", font=("TkDefaultFont", 10))
-        self.sell_label = tk.Label(self.title_frame, text="asks", foreground="#CC0000", background="#333333", font=("TkDefaultFont", 10))
+        self.buy_label = tk.Label(self.title_frame, text="bids", foreground="#00CC00", background="#333333")
+        self.sell_label = tk.Label(self.title_frame, text="asks", foreground="#CC0000", background="#333333")
         self.buy_label.pack(side="left", expand=True, fill="both", padx=5)
         self.sell_label.pack(side="right", expand=True, fill="both", padx=5)
 
         self.buy_frame = tk.Frame(self.master)
-        self.buy_frame.pack(side="left", expand=True, fill="both", padx=5)
+        self.buy_frame.pack(side="left", expand=True, fill="both", padx=5, pady=(0,10))
         self.buy_panel = OrderBookPanel(self.buy_frame, depth)
 
         self.sell_frame = tk.Frame(self.master)
-        self.sell_frame.pack(side="right", expand=True, fill="both", padx=5, pady=2)
+        self.sell_frame.pack(side="right", expand=True, fill="both", padx=5, pady=(0,10))
         self.sell_panel = OrderBookPanel(self.sell_frame, depth)
 
     def on_message(self, ws, message):

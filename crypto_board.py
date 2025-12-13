@@ -80,13 +80,17 @@ class CryptoBoard:
 
 
     def load_preferences(self):
+        error = False
         try:
             with open("preferences.txt", "r") as file:
                 text = file.read().split("\n")
         except FileNotFoundError:
             print("Warning: file not found")
-            return
+            text = ""
+            error = True
         if len(text) != 3:
+            error = True
+        if error:
             print("Warning: file corrupted")
             self.mode = "overview"
             self.on_button_pressed(self.mode)
