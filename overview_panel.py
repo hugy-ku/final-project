@@ -37,7 +37,7 @@ class OverviewPanel:
 
     def set_status(self, connected: bool):
         if connected:
-            self.status.configure(text="connected", foreground="#00B000")
+            self.status.configure(text="connected", foreground="#00A000")
         elif not connected:
             self.status.configure(text="disconnected", foreground="#DD0000")
 
@@ -66,7 +66,7 @@ class OverviewPanel:
             print("Error: change is not a float")
             return
         if change > 0:
-            colour = "#00B000"
+            colour = "#00A000"
         elif change < 0:
             colour = "#DD0000"
         else:

@@ -1,6 +1,8 @@
 # Crypto Dashboard  
 Dashboard for Cryptocurrencies (Final Project)  
-  
+
+Final UI Draft: https://www.figma.com/design/ELtauTyI0uyuVKxAN43TJD/Final-draft?node-id=0-1&t=7hRfZs76s1FveieL-1
+
 ## File system  
 - crypto_board.py  
 - order_book_manager.py  
@@ -52,4 +54,4 @@ Example file can be found in this repository.
 ## How to run  
 Copy all the Python files to the same directory and run crypto_board.py.  
 Tests are found in each Python file and can be run directly.  
-Note: You must implement error handling outside the class if you wish to import any class.
+Note: You must implement error handling outside the class if you wish to import any class.  

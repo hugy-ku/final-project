@@ -90,7 +90,8 @@ class CryptoBoard:
             print("Warning: file not found")
             text = []
             error = True
-        if not error and len(text) != 3:
+        if error: pass # basically putting File not Found as the first if statement
+        elif len(text) != 3:
             print("Warning: file corrupted")
             error = True
         elif text[0] not in {"overview", "order_book"}:
@@ -100,6 +101,7 @@ class CryptoBoard:
         if error:
             self.mode = "overview"
             self.on_button_pressed("overview")
+            return
 
 
         self.overview_manager.load_panels(text[1].split(","))
