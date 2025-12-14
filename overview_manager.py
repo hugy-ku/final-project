@@ -4,7 +4,7 @@ from overview_panel import OverviewPanel
 class OverviewManager:
     def __init__(self, master: tk.Frame, symbols: dict):
         self.frame = tk.Frame(master)
-        self.frame.configure(background="#333333")
+        self.frame.configure(background="#222222")
         self.frame.pack(expand=True, fill="both")
 
         self.symbols = symbols

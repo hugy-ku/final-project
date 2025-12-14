@@ -2,9 +2,11 @@ import tkinter as tk
 from title_bar import TitleBar
 from overview_manager import OverviewManager
 from order_book_manager import OrderBook
+import os
 
 class CryptoBoard:
     def __init__(self, master: tk.Frame, symbols):
+        self.filepath = os.path.realpath(os.path.join(os.path.dirname(__file__), "preferences.txt"))
         self.master = master
         self.master.geometry("1100x600")
         self.symbols = symbols
@@ -75,14 +77,14 @@ class CryptoBoard:
         else:
             new_text.append(self.order_book.symbol_id)
 
-        with open("preferences.txt", "w") as file:
+        with open(self.filepath, "w") as file:
             file.write('\n'.join(new_text))
 
 
     def load_preferences(self):
         error = False
         try:
-            with open("preferences.txt", "r") as file:
+            with open(self.filepath, "r") as file:
                 text = file.read().split("\n")
         except FileNotFoundError:
             print("Warning: file not found")
@@ -104,7 +106,6 @@ class CryptoBoard:
 
 
 if __name__ == "__main__":
-    # no idea why i did this
     SYMBOLS = {
         "btcusdt": "BTC/USDT",
         "ethusdt": "ETH/USDT",
