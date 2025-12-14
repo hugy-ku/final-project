@@ -61,7 +61,7 @@ class CryptoBoard:
                     self.save_preferences()
                     return
             self.order_book_frame = tk.Frame(self.master)
-            self.order_book = OrderBook(self.order_book_frame, button_id, self.symbols[button_id]["name"])
+            self.order_book = OrderBook(self.order_book_frame, button_id, self.symbols[button_id])
             self.save_preferences()
             return
 
@@ -97,26 +97,28 @@ class CryptoBoard:
             return
 
         self.overview_manager.load_panels(text[1].split(","))
-        if text[2] != "":
-            self.order_book = OrderBook(self.order_book_frame, text[2], self.symbols[text[2]]["name"])
-        self.on_button_pressed(text[0]) # insane code lmao, might fix later (read: never)
+        if text[2] in self.symbols.keys():
+            self.order_book = OrderBook(self.order_book_frame, text[2], self.symbols[text[2]])
+        if text[0] in {"overview", "order_book"}:
+            self.on_button_pressed(text[0]) # insane code lmao, might fix later (read: never)
 
 
 if __name__ == "__main__":
+    # no idea why i did this
     SYMBOLS = {
-        "btcusdt": {"name": "BTC/USDT", "id": "btcusdt"},
-        "ethusdt": {"name": "ETH/USDT", "id": "ethusdt"},
-        "solusdt": {"name": "SOL/USDT", "id": "solusdt"},
-        "bnbusdt": {"name": "BNB/USDT", "id": "bnbusdt"},
-        "btcusdc": {"name": "BTC/USDC", "id": "btcusdc"},
-        "ethusdc": {"name": "ETH/USDC", "id": "ethusdc"},
-        "solusdc": {"name": "SOL/USDC", "id": "solusdc"},
-        "bnbusdc": {"name": "BNB/USDC", "id": "bnbusdc"},
+        "btcusdt": "BTC/USDT",
+        "ethusdt": "ETH/USDT",
+        "solusdt": "SOL/USDT",
+        "bnbusdt": "BNB/USDT",
+        "btcusdc": "BTC/USDC",
+        "ethusdc": "ETH/USDC",
+        "solusdc": "SOL/USDC",
+        "bnbusdc": "BNB/USDC",
     }
     root = tk.Tk()
     try:
         board = CryptoBoard(root, SYMBOLS)
-    except ValueError as e:
+    except Exception as e:
         print(f"\n{'#'*10}ERROR{'#'*10}")
         print(e)
         print(f"{'#'*25}\n")

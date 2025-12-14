@@ -1,7 +1,7 @@
 import tkinter as tk
 
 class TitleBar:
-    def __init__(self, master: tk.Frame, button_names: dict, button_event):
+    def __init__(self, master: tk.Frame, symbols: dict, button_event):
         self.button_event = button_event
         self.buttons = {}
         self.master = master
@@ -27,15 +27,16 @@ class TitleBar:
 
         button_frame = tk.Frame(self.master, background="#555555")
         button_frame.pack(side="right")
-        self.load_buttons(button_frame, button_names)
+        self.load_buttons(button_frame, symbols)
 
-    def load_buttons(self, master, button_names: dict):
-        half = len(button_names)//2 + len(button_names)%2
-        for i, button_info in enumerate(button_names.values()):
+    def load_buttons(self, master, symbols: dict):
+        half = len(symbols)//2 + len(symbols)%2
+        for i, button_info in enumerate(symbols.items()):
+            button_id, button_name = button_info
             row = i // half
             column = i % half
-            button_id = button_info["id"]
-            button_name = button_info["name"]
+            # button_id = button_info["id"]
+            # button_name = button_info["name"]
             button = tk.Button(
                 master,
                 text=button_name,
@@ -60,14 +61,14 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("1000x100")
     SYMBOLS = {
-        "btcusdt": {"name": "BTC/USDT", "id": "btcusdt"},
-        "ethusdt": {"name": "ETH/USDT", "id": "ethusdt"},
-        "solusdt": {"name": "SOL/USDT", "id": "solusdt"},
-        "bnbusdt": {"name": "BNB/USDT", "id": "bnbusdt"},
-        "btcusdc": {"name": "BTC/USDC", "id": "btcusdc"},
-        "ethusdc": {"name": "ETH/USDC", "id": "ethusdc"},
-        "solusdc": {"name": "SOL/USDC", "id": "solusdc"},
-        "bnbusdc": {"name": "BNB/USDC", "id": "bnbusdc"},
+        "btcusdt": "BTC/USDT",
+        "ethusdt": "ETH/USDT",
+        "solusdt": "SOL/USDT",
+        "bnbusdt": "BNB/USDT",
+        "btcusdc": "BTC/USDC",
+        "ethusdc": "ETH/USDC",
+        "solusdc": "SOL/USDC",
+        "bnbusdc": "BNB/USDC",
     }
     title_bar = TitleBar(root, SYMBOLS, lambda name: print(f"{name} pressed"))
     root.mainloop()

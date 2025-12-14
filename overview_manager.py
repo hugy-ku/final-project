@@ -13,8 +13,7 @@ class OverviewManager:
     def load_panel(self, symbol_id):
         if symbol_id not in self.symbols.keys():
             return
-        symbol = self.symbols[symbol_id]
-        panel = OverviewPanel(self.frame, symbol["name"], symbol["id"])
+        panel = OverviewPanel(self.frame, self.symbols[symbol_id], symbol_id)
         self.grid(panel, len(self.panels))
         self.panels.append(panel)
 
@@ -67,14 +66,14 @@ class OverviewManager:
 
 if __name__ == "__main__":
     SYMBOLS = {
-        "btcusdt": {"name": "BTC/USDT", "id": "btcusdt"},
-        "ethusdt": {"name": "ETH/USDT", "id": "ethusdt"},
-        "solusdt": {"name": "SOL/USDT", "id": "solusdt"},
-        "bnbusdt": {"name": "BNB/USDT", "id": "bnbusdt"},
-        "btcusdc": {"name": "BTC/USDC", "id": "btcusdc"},
-        "ethusdc": {"name": "ETH/USDC", "id": "ethusdc"},
-        "solusdc": {"name": "SOL/USDC", "id": "solusdc"},
-        "bnbusdc": {"name": "BNB/USDC", "id": "bnbusdc"},
+        "btcusdt": "BTC/USDT",
+        "ethusdt": "ETH/USDT",
+        "solusdt": "SOL/USDT",
+        "bnbusdt": "BNB/USDT",
+        "btcusdc": "BTC/USDC",
+        "ethusdc": "ETH/USDC",
+        "solusdc": "SOL/USDC",
+        "bnbusdc": "BNB/USDC",
     }
     root = tk.Tk()
     frame = tk.Frame(root)
