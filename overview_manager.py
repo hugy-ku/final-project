@@ -11,7 +11,10 @@ class OverviewManager:
         self.panels = []
 
     def load_panel(self, symbol_id):
+        if symbol_id == "":
+            return
         if symbol_id not in self.symbols.keys():
+            print(f"Warning: loading symbol {symbol_id} failed")
             return
         panel = OverviewPanel(self.frame, self.symbols[symbol_id], symbol_id)
         self.grid(panel, len(self.panels))

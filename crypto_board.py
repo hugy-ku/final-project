@@ -88,21 +88,27 @@ class CryptoBoard:
                 text = file.read().split("\n")
         except FileNotFoundError:
             print("Warning: file not found")
-            text = ""
+            text = []
             error = True
-        if len(text) != 3:
-            error = True
-        if error:
+        if not error and len(text) != 3:
             print("Warning: file corrupted")
+            error = True
+        elif text[0] not in {"overview", "order_book"}:
+            print("Warning: mode load failed")
+            error = True
+
+        if error:
             self.mode = "overview"
-            self.on_button_pressed(self.mode)
-            return
+            self.on_button_pressed("overview")
+
 
         self.overview_manager.load_panels(text[1].split(","))
         if text[2] in self.symbols.keys():
             self.order_book = OrderBook(self.order_book_frame, text[2], self.symbols[text[2]])
-        if text[0] in {"overview", "order_book"}:
-            self.on_button_pressed(text[0]) # insane code lmao, might fix later (read: never)
+        elif text[2] != "":
+            print("Warning: order book load failed")
+
+        self.on_button_pressed(text[0]) # insane code lmao, might fix later (read: never)
 
 
 if __name__ == "__main__":
